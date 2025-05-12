@@ -1,5 +1,6 @@
 import React, { StrictMode } from "react";
 import ReactDom from "react-dom/client";
+import "../style.css"
 
 const pizzaData = [
   {
@@ -63,40 +64,64 @@ const Menu = () => {
           Authentic Italian cuisine. 6 creative dishes to choose from. All from
           our stone oven, all organic, all delicious.
         </p>
+        
 
         <div className="pizza-container">
-          <Pizza />
-          <Pizza />
-          <Pizza />
-          <Pizza />
-          <Pizza />
-          <Pizza />
+          {
+            pizzaData.map((data) => {
+              console.log(data)
+              return (
+                <Pizza 
+                  name={data.name} image={data.photoName} ingredients={data.ingredients}
+                />
+              );
+          })
+          }
         </div>
       </div>
     );
 }
 
+const Pizza = (props) => {
+  console.log(props);
+
+  /*
+  const [name, image, ingredients] = props; 
+  this is array destructuring but props is an pure object so we cannot use array desstructing we nned to use object destrucing
+  */
+  const { name, image, ingredients } = props;
+
+  return (
+    <div className="pizza">
+      <img src={image} alt="" />
+      <div>
+        <h3>{name}</h3>
+        <p className="ingre">{ingredients}</p>
+      </div>
+    </div>
+  );
+};
+
 const Footer = () => {
+  const hour = 8;
+
+  const openHour = 12;
+  const closeHour = 10;
+
+  const isOpen = hour >= openHour && hour <= closeHour
+
+  console.log(isOpen);
+  
+
     return (
         <div className="footer">
-
+        <p>{ new Date().toLocaleTimeString()} We are currently open</p>
         </div>
     )
 }
 
 
-const Pizza = () => {
-    return (
-      <div className="pizza">
-            <img  src="/pizzas/spinaci.jpg" alt="" />
-            <div>
-            <h3>Pizza Prosciutto</h3>
-            <p>Tomato, mozarella, ham, aragula, and burrata cheese</p> 
-        </div>
-       
-      </div>
-    );
-};
+
 
 const App = () => {
     return (
